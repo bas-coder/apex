@@ -1,0 +1,55 @@
+# ApeX Design System — Strict Design Rules
+# Format: prompt descriptor for VS Code Continue. Treat every rule as MUST.
+
+## 0. Prime directive
+- One thousand no's for every yes. Bias to minimalism. Every element earns its place.
+- No filler content, no dummy sections, no decorative stats/icons that carry no meaning.
+- Never introduce a color, font, radius, or spacing value that is not in the token file
+  (apex-tokens.css / apex-tokens.json). If you need a new one, add it to the token file FIRST.
+
+## 1. Color
+- Canvas is pure black (--surface-canvas / --neutral-0 #000000). This is a dark-first system.
+- Text: primary = --neutral-900 (#F3F4F6, near-white), secondary = --slate-700 (#CBD5E1).
+- Action/interactive accents are the acid greens: --action-primary (--lime-450 #95D43F),
+  --action-interactive (--profit-500 #00FF66). Brand accent = --lime-400 (#B4D634).
+- Heat/fire accents (--gold-500 #FFB800, --ember-500 #FF5100) are used sparingly — the "X"
+  in the wordmark and rare emphasis only. Never as large fills.
+- Inverse text (--text-inverse / --neutral-200 #171717) is ONLY for light-surfaced elements
+  (e.g. the light pill button). Do not use it on the black canvas.
+- Glow is a first-class effect: --glow-signal rgba(0,255,102,0.55) drives text-shadow and
+  box-shadow on hover of interactive elements. Green light is the signature.
+
+## 2. The light pill button (reference component)
+- Light surface: linear-gradient(180deg, #FFFFFF 0%, #F3F4F6 100%).
+- Dark text: --text-inverse.
+- Fully rounded: border-radius 999px.
+- Subtle GREEN inner shadow rising from the bottom edge:
+    inset 0 -10px 12px -6px rgba(46,125,56,0.35)  (green-500 @ 35%)
+  plus a hairline drop: 0 1px 2px rgba(0,0,0,0.25). Keep it SUBTLE.
+- Hover deepens the inner green glow and lifts translateY(-1px).
+
+## 3. Typography
+- Display / headlines / wordmark: 'Michroma', sans-serif. Tight tracking (--track-display -0.06em).
+- Body / nav / UI: 'Inter', sans-serif (400/500/600).
+- Nav links use --font-overline (11px), uppercase-feel micro labels.
+- Never substitute Roboto/Arial. Never add a third family.
+
+## 4. Motion
+- Signature easing: cubic-bezier(0.16, 1, 0.3, 1). Entrances slide + fade
+  (nav down from -20px, headline up from +50px).
+- Hover transitions 0.35s ease on color / border / shadow / transform.
+- Scroll-driven hero: virtual-scroll wave that falls the wordmark letter-by-letter
+  (translateY down + vertical squish + fade). Do not restore native scroll on the hero.
+- Drive animation from state/JS for anything whose state must survive re-render — not from
+  template inline keyframes.
+
+## 5. Spacing & shape
+- Nav padding: 28px (y) / 40px (x). Bottom gutter: 40px.
+- Default small radius --radius-sm 4px; pills use 999px. No other radii.
+
+## 6. Build rules
+- Inline styles only. No stylesheet classes, no CSS design-token setup beyond :root primitives.
+- Reference tokens via var(--token); never hardcode a hex that duplicates a token.
+- Flex/grid + gap for any group of siblings. No inline-flow layout for UI.
+- No emoji, no gradient-soup backgrounds, no rounded-card-with-left-accent-border tropes.
+- Canonical HTML: quote every attribute, close every non-void element.
