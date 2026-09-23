@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Michroma&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/light/style.css">
+<link rel="preload" as="video" href="assets/riding_scrubbable.mp4" type="video/mp4">
+<style>
+  /* ── ApeX Design System · tokens (backend rules the site abides by) ── */
+  :root{
+    /* Primitives */
+    --neutral-0:#000000; --neutral-200:#171717; --neutral-900:#F3F4F6; --neutral-1000:#FFFFFF;
+    --slate-500:#64748B; --slate-600:#94A3B8; --slate-700:#CBD5E1;
+    --green-500:#2E7D38;
+    --lime-400:#B4D634; --lime-450:#95D43F; --lime-500:#9EC116;
+    --gold-500:#FFB800;
+    --ember-500:#FF5100;
+    --profit-500:#00FF66;
+
+    /* Theme (aliased) */
+    --surface-canvas:var(--neutral-0);
+    --text-primary:var(--neutral-900);
+    --text-secondary:var(--slate-700);
+    --text-on-action:var(--neutral-0);
+    --text-inverse:var(--neutral-200);
+    --accent-brand:var(--lime-400);
+    --accent-signal:var(--profit-500);
+    --accent-fire:var(--gold-500);
+    --accent-heat:var(--ember-500);
+    --action-interactive:var(--profit-500);
+    --action-primary:var(--lime-450);
+    --border-subtle:rgba(255,255,255,0.10);
+    --border-hairline:rgba(255,255,255,0.18);
+    --glow-signal:rgba(0,255,102,0.55);
+    --glow-fire:rgba(255,184,0,0.55);
+
+    /* Responsive (numbers) */
+    --font-display:6vw;
+    --track-display:-0.06em;
+    --font-family-display:'Michroma',sans-serif;
+    --font-family-body:'Inter',sans-serif;
+    --font-overline:11px;
+    --track-tight:-0.02em;
+    --space-nav-y:28px; --space-nav-x:40px; --space-bottom:40px;
+    --radius-sm:4px;
+    --easing-signature:cubic-bezier(0.16,1,0.3,1);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--surface-canvas);overflow:hidden}
+  @keyframes apex-nav-down{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes apex-head-up{from{opacity:0;transform:translateY(50px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes apex-manifesto-in{from{opacity:0}to{opacity:1}}
+  @keyframes apex-letter-in{from{opacity:0;transform:translateY(12px) scale(0.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+  .apex-bg-layer{position:absolute;inset:0;overflow:hidden;z-index:0;contain:strict;transform-origin:center center}
+  .apex-bg-video,.apex-bg-canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform-origin:center center;pointer-events:none}
+  .apex-bg-canvas{z-index:1}
+  .apex-bg-video{z-index:2;opacity:0}
+  .apex-bg-video.is-ready{opacity:1}
+  .apex-rise-panel{
+    position:absolute;inset:0;z-index:4;
+    background:transparent;
+    border-radius:48px 48px 0 0;
+    overflow:hidden;
+    transform:translate3d(0,100%,0);
+    will-change:transform;
+    pointer-events:none;
+  }
+  .apex-panel-media-layer{
+    position:absolute;inset:0;z-index:3;
+    border-radius:48px 48px 0 0;
+    overflow:hidden;
+    transform:translate3d(0,100%,0);
+    will-change:transform;
+    pointer-events:none;
+    background:var(--surface-canvas);
+    box-shadow:0 -24px 80px rgba(0,0,0,0.45);
+  }
+  .apex-panel-stage{
+    position:absolute;inset:0;z-index:0;
+    overflow:visible;
+    background:var(--surface-canvas);pointer-events:none;
+  }
+  .apex-panel-stage::after{
+    content:"";
+    position:absolute;inset:0;z-index:2;pointer-events:none;
+    background:linear-gradient(90deg,var(--surface-canvas) 0%,rgba(0,0,0,0.55) 38%,transparent 54%);
+  }
+  .apex-panel-crop{
+    position:absolute;top:6%;bottom:4%;
+    right:clamp(20px,3.5vw,44px);left:auto;
+    width:min(36vw,460px);max-width:42%;
+    min-height:min(48vh,480px);
+    overflow:visible;isolation:isolate;z-index:3;
+  }
+  .apex-panel-media{
+    position:absolute;inset:-5%;width:110%;height:110%;
+    object-fit:cover;object-position:62% center;
+    pointer-events:none;display:block;
+    background:var(--surface-canvas);
+    transform:translateZ(0);
+    opacity:0;
+  }
+  .apex-panel-media.is-ready{opacity:1}
+  .apex-panel-vignette{
+    position:absolute;inset:-8%;z-index:2;pointer-events:none;
+    background:
+      radial-gradient(ellipse 92% 88% at 58% 50%,transparent 46%,rgba(0,0,0,0.45) 72%,rgba(0,0,0,0.92) 100%),
+      linear-gradient(90deg,rgba(0,0,0,0.85) 0%,transparent 28%),
+      linear-gradient(270deg,rgba(0,0,0,1) 0%,rgba(0,0,0,0.75) 10%,rgba(0,0,0,0.25) 22%,transparent 38%);
+  }
+  .apex-scroller{
+    position:relative;width:100%;
+    height:100vh;height:100dvh;
+    overflow:hidden;background:var(--surface-canvas);
+    font-family:var(--font-family-body);color:var(--text-primary);
+    touch-action:none;
+  }
+  .apex-nav{
+    position:absolute;top:0;left:0;right:0;z-index:6;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:calc(var(--space-nav-y) + env(safe-area-inset-top, 0px)) calc(var(--space-nav-x) + env(safe-area-inset-right, 0px)) var(--space-nav-y) calc(var(--space-nav-x) + env(safe-area-inset-left, 0px));
+    animation:apex-nav-down 1s cubic-bezier(0.16,1,0.3,1) 0.35s both;
+  }
+  .apex-nav-logo{
+    font-size:22px;letter-spacing:-0.5px;display:flex;align-items:center;
+    user-select:none;font-family:var(--font-family-display);flex-shrink:0;
+  }
+  .apex-nav-links{
+    display:flex;align-items:center;gap:38px;flex-shrink:0;
+  }
+  .apex-nav-link{
+    font-size:var(--font-overline);color:var(--text-secondary);text-decoration:none;
+    transition:color 0.35s ease,text-shadow 0.35s ease;white-space:nowrap;
+  }
+  .apex-nav-link:hover{color:var(--accent-fire);text-shadow:0 0 14px var(--glow-fire)}
+  .apex-nav-cta{
+    color:var(--text-inverse);padding:12px 22px;border-radius:999px;
+    background:linear-gradient(180deg,var(--neutral-1000) 0%,var(--neutral-900) 100%);
+    border:1px solid rgba(0,0,0,0.06);
+    box-shadow:inset 0 -10px 12px -6px rgba(46,125,56,0.35);
+    transition:box-shadow 0.35s ease,transform 0.35s ease;
+  }
+  .apex-nav-cta:hover{
+    box-shadow:inset 0 -12px 14px -6px rgba(46,125,56,0.5);transform:translateY(-1px);
+  }
+  .apex-headline{
+    position:absolute;left:0;right:0;bottom:calc(var(--space-bottom) + env(safe-area-inset-bottom, 0px));z-index:2;
+    padding:0 var(--space-nav-x);
+    animation:apex-head-up 1.2s cubic-bezier(0.16,1,0.3,1) 0.6s both;
+  }
+  .apex-headline-inner{
+    position:relative;width:100%;text-align:center;
+    font-size:var(--font-display);line-height:0.9;letter-spacing:var(--track-display);
+    white-space:nowrap;font-family:var(--font-family-display);color:var(--text-primary);
+  }
+  .apex-end-copy{
+    position:absolute;left:var(--space-nav-x);top:clamp(120px,18vh,200px);
+    max-width:min(400px,36vw);z-index:5;text-align:left;
+    pointer-events:none;opacity:0;
+  }
+  .apex-end-copy h2{
+    font-family:var(--font-family-display);font-size:clamp(32px,4vw,46px);
+    margin:0;line-height:1.1;letter-spacing:normal;text-transform:uppercase;color:var(--text-primary);
+  }
+  .apex-end-copy p{
+    font-size:clamp(17px,1.35vw,20px);color:var(--text-secondary);
+    margin:24px 0 0;line-height:1.6;font-weight:400;
+  }
+  .apex-manifesto-close{
+    position:absolute;top:calc(28px + env(safe-area-inset-top, 0px));right:calc(40px + env(safe-area-inset-right, 0px));
+    z-index:22;width:40px;height:40px;display:flex;align-items:center;justify-content:center;
+    border:0;background:transparent;color:var(--text-primary);cursor:pointer;
+    transition:color 0.35s ease,text-shadow 0.35s ease;
+  }
+  .apex-manifesto-close:hover{color:var(--action-interactive);text-shadow:0 0 14px var(--glow-signal)}
+  .apex-manifesto-stage{
+    position:relative;z-index:21;width:min(420px,78vw);height:min(560px,78vh);
+    animation:apex-letter-in 0.6s cubic-bezier(0.16,1,0.3,1) both;
+    transition:opacity 0.2s cubic-bezier(0.7,0,0.84,0),transform 0.2s cubic-bezier(0.7,0,0.84,0);
+  }
+  @media (max-width:1024px){
+    :root{
+      --space-nav-x:28px;--space-nav-y:22px;--space-bottom:32px;
+      --font-display:7vw;
+    }
+    .apex-nav-links{gap:24px}
+    .apex-nav-quiet{display:none}
+    .apex-drum-scene{flex:0 0 min(58vw,640px)}
+    .apex-panel-crop{width:min(40vw,400px);max-width:44%}
+  }
+  @media (max-width:900px){
+    .apex-panel-crop{
+      top:10%;right:16px;bottom:6%;
+      width:min(44vw,320px);max-width:48%;
+    }
+    .apex-panel-media{inset:-4%;width:108%;height:108%}
+    .apex-drum-wrap{padding:88px 24px 64px}
+    .apex-drum-scene{flex:0 0 100%;max-width:none}
+    .apex-rise-panel,.apex-panel-media-layer{border-radius:32px 32px 0 0}
+  }
+  @media (max-width:768px){
+    :root{
+      --space-nav-x:20px;--space-nav-y:16px;--space-bottom:24px;
+      --font-display:clamp(28px,8.2vw,52px);--font-overline:10px;
+    }
+    .apex-nav-links{gap:14px}
+    .apex-nav-cta{padding:10px 16px;font-size:10px}
+    .apex-headline{padding:0 16px}
+    .apex-end-copy{
+      left:20px;right:20px;max-width:none;
+      top:clamp(96px,14vh,150px);
+    }
+    .apex-end-copy h2{font-size:clamp(26px,7vw,36px)}
+    .apex-end-copy p{font-size:clamp(15px,3.8vw,18px);margin-top:16px}
+    .apex-drum-wrap{
+      padding:72px 20px 44vh;
+      align-items:flex-start;
+    }
+    .apex-drum-scene{perspective-origin:50% 42%}
+    .apex-drum-line{font-size:clamp(15px,3.6vw,20px)}
+    .apex-panel-media-layer,.apex-rise-panel{border-radius:28px 28px 0 0}
+    .apex-panel-stage::after{
+      background:linear-gradient(180deg,var(--surface-canvas) 0%,rgba(0,0,0,0.65) 14%,transparent 32%,transparent 58%,rgba(0,0,0,0.35) 100%);
+    }
+    .apex-panel-crop{
+      top:auto;left:0;right:0;bottom:0;
+      width:100%;max-width:none;
+      height:min(44vh,360px);min-height:240px;
+    }
+    .apex-panel-media{object-position:50% 38%}
+    .apex-panel-vignette{
+      background:
+        radial-gradient(ellipse 100% 80% at 50% 55%,transparent 40%,rgba(0,0,0,0.4) 68%,rgba(0,0,0,0.9) 100%),
+        linear-gradient(180deg,rgba(0,0,0,0.75) 0%,transparent 22%),
+        linear-gradient(0deg,rgba(0,0,0,0.85) 0%,rgba(0,0,0,0.35) 18%,transparent 36%);
+    }
+    .apex-manifesto-stage{width:min(420px,92vw);height:min(560px,82dvh)}
+    .apex-manifesto-close{top:calc(16px + env(safe-area-inset-top, 0px));right:calc(16px + env(safe-area-inset-right, 0px))}
+  }
+  @media (max-width:480px){
+    :root{
+      --space-nav-x:16px;--space-nav-y:14px;--space-bottom:20px;
+      --font-display:clamp(22px,7.4vw,34px);
+    }
+    .apex-nav-logo{font-size:18px}
+    .apex-nav-links{gap:10px}
+    .apex-nav-link:not(.apex-nav-cta):not(.apex-nav-manifesto){display:none}
+    .apex-nav-cta{padding:9px 14px}
+    .apex-headline-inner{letter-spacing:-0.05em}
+    .apex-drum-wrap{padding:64px 16px 42vh}
+    .apex-drum-line{font-size:clamp(14px,3.4vw,18px);line-height:1.3}
+    .apex-panel-crop{height:min(42vh,320px);min-height:220px}
+    .apex-rise-handle{top:10px;width:36px}
+    .apex-rise-panel,.apex-panel-media-layer{border-radius:24px 24px 0 0}
+    .apex-letter-face>div,.apex-letter-face-back>div{padding:28px 24px 24px!important}
+    .apex-manifesto-stage{width:94vw;height:min(520px,78dvh)}
+  }
+  @media (max-width:390px){
+    .apex-headline-inner{
+      transform:scale(0.9);
+      transform-origin:center bottom;
+    }
+    .apex-drum-line{font-size:clamp(13px,3.2vw,16px)}
+  }
+  .apex-rise-handle{
+    position:absolute;top:14px;left:50%;transform:translateX(-50%);
+    width:44px;height:4px;border-radius:999px;
+    background:var(--border-hairline);opacity:0.55;z-index:2;pointer-events:none;
+  }
+  .apex-drum-wrap{
+    position:absolute;inset:0;
+    display:flex;align-items:stretch;
+    padding:96px var(--space-nav-x) 72px;
+    pointer-events:none;
+    z-index:1;
+    -webkit-mask-image:linear-gradient(180deg,transparent 0%,rgba(0,0,0,0.35) 8%,#000 18%,#000 82%,rgba(0,0,0,0.35) 92%,transparent 100%);
+    mask-image:linear-gradient(180deg,transparent 0%,rgba(0,0,0,0.35) 8%,#000 18%,#000 82%,rgba(0,0,0,0.35) 92%,transparent 100%);
+  }
+  .apex-drum-scene{
+    position:relative;flex:0 0 min(52vw,640px);max-width:640px;height:100%;
+    perspective:1200px;perspective-origin:42% 50%;
+    overflow:visible;
+  }
+  .apex-drum-rig{position:relative;width:100%;height:100%;transform-style:preserve-3d}
+  .apex-drum-line{
+    position:absolute;left:0;top:50%;width:100%;
+    white-space:nowrap;transform-style:preserve-3d;
+    font-size:clamp(17px,2.05vw,26px);line-height:1.35;
+    letter-spacing:-0.01em;font-family:var(--font-family-body);
+    backface-visibility:hidden;
+  }
+  .apex-drum-line.apex-drum-soft{filter:blur(2.4px)}
+  .apex-drum-blank{position:absolute;left:0;width:100%;height:28px;pointer-events:none;visibility:hidden}
+  .apex-drum-glue{color:var(--slate-600);opacity:0.6;font-weight:400}
+  .apex-drum-hit{color:var(--text-primary);opacity:1;font-weight:600}
+  .apex-letter-scene{position:relative;perspective:1400px;perspective-origin:50% 48%}
+  .apex-letter-shadow{
+    position:absolute;inset:14px 4px -24px 8px;
+    background:var(--neutral-0);opacity:0.4;
+    clip-path:url(#apex-letter-clip);-webkit-clip-path:url(#apex-letter-clip);
+    filter:blur(22px);pointer-events:none;z-index:0;
+  }
+  .apex-letter-rig{position:relative;z-index:1;transform-style:preserve-3d;transform-origin:50% 50%}
+  .apex-letter-face{
+    position:absolute;inset:0;
+    -webkit-backface-visibility:hidden;backface-visibility:hidden;
+    overflow:hidden;border:0;border-radius:0;
+    isolation:isolate;
+    color:var(--text-inverse);
+    clip-path:url(#apex-letter-clip);-webkit-clip-path:url(#apex-letter-clip);
+    background-color:var(--neutral-1000);
+    background-image:
+      linear-gradient(180deg,rgba(255,255,255,0.42) 0%,rgba(243,244,246,0.88) 100%),
+      url("assets/paper-grain.svg");
+    background-size:auto, 180px 180px;
+  }
+  .apex-letter-face::before{
+    content:"";
+    position:absolute;inset:0;
+    pointer-events:none;z-index:0;
+    opacity:0.28;
+    mix-blend-mode:multiply;
+    background-image:
+      repeating-linear-gradient(0deg,color-mix(in srgb,var(--neutral-200) 4%,transparent) 0 1px,transparent 1px 3px),
+      repeating-linear-gradient(90deg,color-mix(in srgb,var(--neutral-200) 3%,transparent) 0 1px,transparent 1px 4px),
+      url("assets/paper-grain.svg");
+    background-size:auto, auto, 140px 140px;
+  }
+  .apex-letter-face::after{
+    content:"";
+    position:absolute;inset:0;
+    pointer-events:none;z-index:1;
+    background-image:linear-gradient(180deg,
+      color-mix(in srgb,var(--neutral-1000) 28%,transparent) 0%,
+      color-mix(in srgb,var(--neutral-1000) 10%,transparent) 30%,
+      color-mix(in srgb,var(--neutral-200) 4.5%,transparent) 33.333%,
+      color-mix(in srgb,var(--neutral-200) 7%,transparent) 50%,
+      color-mix(in srgb,var(--neutral-200) 5%,transparent) 64%,
+      color-mix(in srgb,var(--neutral-1000) 8%,transparent) 68%,
+      color-mix(in srgb,var(--neutral-200) 3.5%,transparent) 100%);
+  }
+  .apex-letter-face-back{transform:rotateX(180deg)}
+  @media (prefers-reduced-motion:reduce){
+    .apex-letter-rig{transition:none}
+  }
+  /* Uncompiled DC flash: unknown <sc-if> shows children; hide until React mounts. */
+  sc-if{display:none!important}
+  html.sc-dc-streaming .apex-end-copy,
+  html.sc-dc-streaming .apex-manifesto-overlay{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
+  .sc-interp.sc-missing,.sc-interp.sc-unresolved{visibility:hidden!important}
+  /* Boot veil survives document.replaceWith — keep it covering until first canvas frame. */
+  #apex-boot{position:fixed;inset:0;z-index:2147483646;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#000000;color:#F3F4F6;font-family:var(--font-family-display),sans-serif;transition:opacity 0.6s cubic-bezier(0.16,1,0.3,1)}
+  #apex-boot .mark{font-size:22px;letter-spacing:-0.5px;user-select:none}
+  #apex-boot .x{color:var(--accent-fire)}
+  #apex-boot .bar{width:48px;height:1px;margin-top:22px;background:var(--accent-signal);box-shadow:0 0 14px var(--glow-signal);transform-origin:center;animation:apex-boot-bar 1.2s cubic-bezier(0.16,1,0.3,1) infinite}
+  #apex-boot .fail{display:none}
+  @keyframes apex-boot-bar{0%,100%{transform:scaleX(0.35);opacity:0.35}50%{transform:scaleX(1);opacity:1}}
+  @media (prefers-reduced-motion:reduce){#apex-boot .bar{animation:none;opacity:0.7}#apex-boot{transition-duration:0.01s}}
+  .apex-hero-layer{position:absolute;inset:0;z-index:2;pointer-events:none}
+  .apex-hero-layer .apex-hero-interactive{pointer-events:auto}
+  @media (prefers-reduced-motion:reduce){
+    .apex-drum-line{filter:none!important;transform:none!important;opacity:1!important;position:relative!important;top:auto!important;margin:0 0 12px}
+    .apex-drum-rig{display:flex;flex-direction:column;justify-content:center;height:auto;padding:40px 0}
+    .apex-drum-scene{overflow:auto;perspective:none}
+  }
+</style>
+</helmet>
+<div ref="{{ scrollerRef }}" class="apex-scroller">
+
+  <div style="position:absolute;inset:0;overflow:hidden;contain:strict">
+    <div ref="{{ bgLayerRef }}" class="apex-bg-layer">
+      <video ref="{{ videoRef }}" muted playsinline preload="auto" aria-hidden="true" class="apex-bg-video"></video>
+      <canvas ref="{{ canvasRef }}" width="1920" height="1080" class="apex-bg-canvas"></canvas>
+    </div>
+
+    <div ref="{{ panelMediaRef }}" class="apex-panel-media-layer">
+      <div class="apex-panel-stage">
+        <div class="apex-panel-crop">
+          <video ref="{{ panelVideoRef }}" muted playsinline preload="auto" aria-hidden="true" class="apex-panel-media"></video>
+          <div class="apex-panel-vignette" aria-hidden="true"></div>
+        </div>
+      </div>
+    </div>
+
+    <nav ref="{{ navRef }}" class="apex-nav">
+      <div class="apex-nav-logo">
+        <span style="color:var(--text-primary)">Ape</span><span style="color:var(--accent-fire)">X</span>
+      </div>
+      <div class="apex-nav-links">
+        <a href="#manifesto" onclick="{{ openManifesto }}" class="apex-nav-link apex-nav-manifesto">The Manifesto</a>
+        <a href="#" class="apex-nav-link apex-nav-quiet">GreenLight</a>
+        <a href="#" class="apex-nav-link apex-nav-quiet">Base</a>
+        <a href="#" class="apex-nav-link apex-nav-cta">Join the Pride</a>
+      </div>
+    </nav>
+
+    <div ref="{{ headlineRef }}" class="apex-headline">
+      <div class="apex-headline-inner">
+        <sc-for list="{{ chars }}" as="c" hint-placeholder-count="14">
+          <span style="display:inline-block;white-space:pre;transform-origin:center top">{{ c.ch }}</span>
+        </sc-for>
+      </div>
+    </div>
+    
+    <div ref="{{ endCopyRef }}" class="apex-end-copy">
+       <h2>THE ALPHA EXCHANGE</h2>
+       <p>A global pride tired of the status quo. We hunt legitimate opportunities together, vet every play, and execute as one. We do not lurk; we lead.</p>
+    </div>
+
+    <div ref="{{ panelRef }}" class="apex-rise-panel">
+      <div class="apex-rise-handle"></div>
+      <div class="apex-drum-wrap">
+        <div class="apex-drum-scene">
+          <div ref="{{ drumRigRef }}" class="apex-drum-rig">
+            <sc-for list="{{ drumLines }}" as="line">
+              <sc-if value="{{ line.isGap }}">
+                <div class="apex-drum-blank"></div>
+              </sc-if>
+              <sc-if value="{{ line.isLine }}">
+                <div class="apex-drum-line">
+                  <sc-for list="{{ line.parts }}" as="part">
+                    <span class="{{ part.cls }}">{{ part.text }}</span>
+                  </sc-for>
+                </div>
+              </sc-if>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <sc-if value="{{ manifestoOpen }}">
+    <div class="apex-manifesto-overlay" ref="{{ overlayRef }}" onclick="{{ closeManifesto }}" role="presentation" style="position:absolute;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.82);animation:apex-manifesto-in 0.35s cubic-bezier(0.16,1,0.3,1) both;transition:opacity 0.2s cubic-bezier(0.7,0,0.84,0)">
+      <button type="button" onclick="{{ closeManifesto }}" aria-label="Close manifesto" class="apex-manifesto-close"><i class="ph-light ph-x" aria-hidden="true" style="font-size:22px;line-height:1"></i></button>
+
+      <div ref="{{ stageRef }}" onclick="{{ swallowClick }}" role="dialog" aria-modal="true" aria-labelledby="apex-manifesto-title" class="apex-manifesto-stage">
+        <span id="apex-manifesto-title" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">ApeX Manifesto</span>
+        <svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+          <defs>
+            <clipPath id="apex-letter-clip" clipPathUnits="objectBoundingBox">
+              <path d="M0.02,0.014 C0.09,0.002 0.24,0.02 0.40,0.008 C0.58,-0.002 0.74,0.018 0.90,0.006 C0.96,0.000 0.992,0.022 0.990,0.05 C1.004,0.20 0.976,0.34 0.994,0.50 C1.008,0.64 0.974,0.80 0.988,0.93 C0.994,0.97 0.96,0.996 0.90,0.990 C0.72,0.976 0.54,0.998 0.34,0.988 C0.18,0.980 0.04,0.996 0.012,0.96 C-0.002,0.80 0.024,0.60 0.006,0.42 C-0.006,0.26 0.022,0.11 0.02,0.014 Z"/>
+            </clipPath>
+          </defs>
+        </svg>
+        <div class="apex-letter-scene" style="width:100%;height:100%">
+          <div class="apex-letter-shadow"></div>
+          <div ref="{{ letterRigRef }}" class="apex-letter-rig" onclick="{{ flipLetter }}" style="width:100%;height:100%;cursor:pointer;transform:{{ letterTransform }}">
+
+            <div class="apex-letter-face">
+              <div style="position:relative;z-index:2;display:flex;flex-direction:column;height:100%;padding:40px 44px 32px;overflow:hidden">
+                <div style="font-size:var(--font-overline);letter-spacing:normal;color:var(--green-500);font-weight:600;margin-bottom:14px">{{ frontPage.kicker }}</div>
+                <div style="font-family:var(--font-family-display);font-size:{{ frontPage.titleSize }};line-height:1.2;letter-spacing:normal;color:var(--text-inverse);margin:0 0 18px">{{ frontPage.title }}</div>
+                <sc-for list="{{ frontPage.paragraphs }}" as="para">
+                  <p style="margin:0 0 12px;font-size:15px;line-height:1.55;color:var(--text-inverse);font-weight:400">{{ para }}</p>
+                </sc-for>
+                <div style="flex:1"></div>
+                <div style="font-size:13px;line-height:1.5;color:var(--green-500);font-weight:500;margin-bottom:8px">{{ frontPage.closing }}</div>
+                <div style="font-family:var(--font-family-display);font-size:16px;letter-spacing:-0.02em;color:var(--text-inverse)">{{ frontPage.signature }}</div>
+                <div style="margin-top:18px;display:flex;align-items:center;justify-content:space-between;font-size:10px;letter-spacing:0.14em;color:var(--slate-500);text-transform:uppercase">
+                  <span>Click to turn</span>
+                  <span>{{ frontLabel }}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="apex-letter-face apex-letter-face-back">
+              <div style="position:relative;z-index:2;display:flex;flex-direction:column;height:100%;padding:40px 44px 32px;overflow:hidden">
+                <div style="font-size:var(--font-overline);letter-spacing:normal;color:var(--green-500);font-weight:600;margin-bottom:14px">{{ backPage.kicker }}</div>
+                <div style="font-family:var(--font-family-display);font-size:{{ backPage.titleSize }};line-height:1.2;letter-spacing:normal;color:var(--text-inverse);margin:0 0 18px">{{ backPage.title }}</div>
+                <sc-for list="{{ backPage.paragraphs }}" as="para">
+                  <p style="margin:0 0 12px;font-size:15px;line-height:1.55;color:var(--text-inverse);font-weight:400">{{ para }}</p>
+                </sc-for>
+                <div style="flex:1"></div>
+                <div style="font-size:13px;line-height:1.5;color:var(--green-500);font-weight:500;margin-bottom:8px">{{ backPage.closing }}</div>
+                <div style="font-family:var(--font-family-display);font-size:16px;letter-spacing:-0.02em;color:var(--text-inverse)">{{ backPage.signature }}</div>
+                <div style="margin-top:18px;display:flex;align-items:center;justify-content:space-between;font-size:10px;letter-spacing:0.14em;color:var(--slate-500);text-transform:uppercase">
+                  <span>Click to turn</span>
+                  <span>{{ backLabel }}</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const HERO_VIDEO_SRC = "assets/lion_scrubbable.mp4";
+const SECTION2_IMAGE_SRC = "";
+const SECTION2_VIDEO_SRC = "assets/riding_scrubbable.mp4";
+
+const DRUM_LINES = [
+  "We [gather] as a [pride] to [hunt] the",
+  "[most lucrative] plays the [financial system] hides.",
+  "[Legit memecoins]. [Insider signals]. [Verified alpha].",
+  "Plays that [actually work] while the [crowd] sleeps.",
+  "Experience [zero-noise networking] and [weekly allocations].",
+  "Unreleased [toolkits] to shape how the [pride] moves.",
+  "We [scout] on X, Telegram, and [niche forums].",
+  "We [post] in [Base], we [vet], we [execute] together.",
+  "When [GreenLight] fires, you [move]. No [chatting].",
+  "No [spam]. [Strictly business]. [Signal only].",
+  "",
+  "This is [not a WhatsApp group] for [lurkers].",
+  "This is a [highly selective pride] for [hunters].",
+  "Built for [operators] who [refuse] to [stay broke].",
+  "The [system] is [rigged]. A [tight-knit pride] still wins.",
+  "[Green] is profit [secured]. [Yellow] is the [lion's fire].",
+  "If one [eats], we [all eat]. We [share] what we [find].",
+  "Every [finder] earns the [Finder's Tax] on [net profit].",
+  "[Skip the tax] and you're [banned] without [appeal].",
+  "We [purge] [inactive] members at [month-end]. [Stay hungry].",
+  "We are building a [table of billionaires].",
+  "[Quality over quantity]. [Results over excuses].",
+  "You [bring value] or you [lose your seat]. Simple.",
+  "We [communicate] in English and [Pidgin]. [Global pride].",
+  "[Rogue plays] stay on you if they [fail]. [Win] and pay.",
+  "Monday to Friday we [grind]. Saturday we [sync].",
+  "Collective [PnL]. Collective [discipline]. Collective [wealth].",
+  "The [young lion] burns. The [pride] hunts. The [apex] waits.",
+  "[Welcome to ApeX]."
+];
+
+function parseDrumLine(raw) {
+  const parts = [];
+  const re = /\[([^\]]+)\]|([^\[]+)/g;
+  let m;
+  while ((m = re.exec(raw)) !== null) {
+    if (m[1]) parts.push({ text: m[1], cls: "apex-drum-hit" });
+    else if (m[2]) parts.push({ text: m[2], cls: "apex-drum-glue" });
+  }
+  return parts;
+}
+
+const MANIFESTO_PAGES = [
+  {
+    kicker: "CONSTITUTION  ·  VERSION 2.0",
+    title: "THE MANIFESTO",
+    titleSize: "28px",
+    paragraphs: [
+      "ApeX is not a WhatsApp group. It is a collective of individuals tired of the status quo, hunting the most lucrative legitimate opportunities in the financial system.",
+      "Legit memecoins. Market information. Plays that actually work."
+    ],
+    closing: "Status: ACTIVE",
+    signature: "ApeX"
+  },
+  {
+    kicker: "01  /  WHO WE ARE",
+    title: "Hunt together.",
+    titleSize: "22px",
+    paragraphs: [
+      "We exist to escape our predicaments by hunting lucrative, legitimate opportunities as a tight-knit pride, not as lone operators.",
+      "Our mascot, a young lion in flame, is who we are: hungry, fierce, growing into power, burning to change our lives."
+    ],
+    closing: "The system is rigged. A pride still reaches the apex of wealth.",
+    signature: "Quality over Quantity."
+  },
+  {
+    kicker: "02  /  CORE VALUES",
+    title: "Green. Yellow. Value.",
+    titleSize: "22px",
+    paragraphs: [
+      "Green is the profit we secure. Yellow is the fire driving the young lion forward.",
+      "We do not care where you are from, how old you are, or what language you speak at home. Zero tolerance for racism, tribalism, or discrimination.",
+      "We are a global pride. We communicate in English or Pidgin. The only question that matters: can you bring value to the table?"
+    ],
+    closing: "If one eats, we all eat. We share, we vet, we execute together.",
+    signature: "Lurkers are removed."
+  },
+  {
+    kicker: "03  /  GROUP STRUCTURE",
+    title: "Two channels.",
+    titleSize: "22px",
+    paragraphs: [
+      "GreenLight is the signal channel. Verified opportunities only. When it fires, you move. No chatting. No spam. Strictly business.",
+      "Base is the war room. Members post ideas to be checked. We argue, we analyse, and we decide if a play is good enough for GreenLight."
+    ],
+    closing: "Organised hunt. No noise in the signal.",
+    signature: "GreenLight  ·  Base"
+  },
+  {
+    kicker: "04  /  THE FINDER'S TAX",
+    title: "Honour the source.",
+    titleSize: "22px",
+    paragraphs: [
+      "If a member brings a play, they choose: tax or free. Unspecified means the tax is mandatory: an agreed cut of net profit paid to the finder.",
+      "Rogue plays that the group marks too risky stay on you if they lose. If they win, the tax is still owed unless the finder waived it. Without that member, you would not have seen it."
+    ],
+    closing: "Skipping the tax is an immediate, permanent ban.",
+    signature: "We honour the source."
+  },
+  {
+    kicker: "05  /  MODE OF OPERATION",
+    title: "Scout. Share. Vet. Execute.",
+    titleSize: "20px",
+    paragraphs: [
+      "Monday to Friday: hunt on X, Telegram, and niche forums. Post findings in Base using the submission format. Vet liquidity and the developer. Approved plays move to GreenLight.",
+      "Saturday: weekly space for wins, losses, next week. Month-end: collective PnL and the purge. Did you contribute? Were you active? If not, your seat goes to someone hungry."
+    ],
+    closing: "This is not a charity.",
+    signature: "Stay hungry."
+  },
+  {
+    kicker: "06  /  SUBMISSION PROTOCOL",
+    title: "Do not drop a link.",
+    titleSize: "20px",
+    paragraphs: [
+      "When you introduce an idea in Base, use this format: name and ticker, the catalyst, risk level from 1 to 10, verification (liquidity, developer), Finder's Tax yes or no, and your analysis.",
+      "We are building a table of billionaires. If you cannot follow simple rules, you do not belong at it."
+    ],
+    closing: "Welcome to ApeX.",
+    signature: "Results over Excuses."
+  }
+];
+
+class Component extends DCLogic {
+  state = {
+    progress: 0,
+    manifestoOpen: false,
+    pageIndex: 0,
+    frontIndex: 0,
+    backIndex: 0,
+    flipTurns: 0,
+    isFlipping: false
+  };
+
+  constructor(props) {
+    super(props);
+    this.scrollerRef = React.createRef();
+    this.canvasRef = React.createRef();
+    this.videoRef = React.createRef();
+    this.bgLayerRef = React.createRef();
+    this.navRef = React.createRef();
+    this.headlineRef = React.createRef();
+    this.endCopyRef = React.createRef();
+    this.panelRef = React.createRef();
+    this.panelMediaRef = React.createRef();
+    this.panelVideoRef = React.createRef();
+    this.drumRigRef = React.createRef();
+    this.overlayRef = React.createRef();
+    this.stageRef = React.createRef();
+    this.letterRigRef = React.createRef();
+    this.openManifesto = this.openManifesto.bind(this);
+    this.closeManifesto = this.closeManifesto.bind(this);
+    this.flipLetter = this.flipLetter.bind(this);
+    this.swallowClick = this.swallowClick.bind(this);
+    this._heroVideoSrc = HERO_VIDEO_SRC;
+    this._videoReady = false;
+    this._panelFocalX = 0.62;
+    this._panelSrc = SECTION2_VIDEO_SRC;
+    this._panelVideoReady = false;
+    this._panelScrubStart = 0.58;
+    this._panelScrubSpan = 0.42;
+    this._heroScrubSpan = 0.58;
+    this._heroScrubEnd = 0.58;
+    this._headlineSpan = 0.28;
+    this._headlineDur = 0.16;
+    this._endCopyStart = 0.30;
+    this._endCopyIn = 0.14;
+    this._endCopyHold = 0.58;
+    this._panelStart = 0.58;
+    this._panelEnd = 0.76;
+    this._drumStart = 0.66;
+    this._drumEnd = 1;
+    this._drumRadius = 400;
+    this._drumLineH = 46;
+    this._drumTextCount = DRUM_LINES.filter((line) => line !== "").length;
+  }
+
+  componentDidMount() {
+    const el = this.scrollerRef.current;
+    if (!el) return;
+    this._el = el;
+    this._v = 0;
+    this._max = 7200;
+    this._touchGain = 1;
+    this._syncResponsive = () => {
+      const w = this._viewW || window.innerWidth || 1;
+      if (w <= 480) {
+        this._touchGain = 1.35;
+        this._drumRadius = 280;
+        this._drumLineH = 38;
+      } else if (w <= 768) {
+        this._touchGain = 1.2;
+        this._drumRadius = 340;
+        this._drumLineH = 42;
+      } else {
+        this._touchGain = 1;
+        this._drumRadius = 400;
+        this._drumLineH = 46;
+      }
+      if (this._drumFocusIndex != null) this._paintDrum(this._drumFocusIndex);
+    };
+    this._frameLerp = 0.28;
+    this._videoLerp = 1;
+    this._targetP = 0;
+    this._touchY = null;
+    this._reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    this._closing = false;
+    this._flipRaf = null;
+    this._lastFocus = null;
+    this._paraScale = 1.1;
+    this._paraCover = 0.82;
+    this._px = 0;
+    this._py = 0;
+    this._pxT = 0;
+    this._pyT = 0;
+    this._viewW = window.innerWidth || 1;
+    this._viewH = window.innerHeight || 1;
+    this._heroCapW = 1920;
+    this._heroCapH = 1080;
+    this._heroDprCap = (navigator.hardwareConcurrency || 8) <= 4 ? 1 : 1.25;
+    this._heroSmooth = "medium";
+    this._heroCtx = null;
+    this._useFrames = !this._heroVideoSrc;
+    this._settled = false;
+
+    if (this._reduced && this.bgLayerRef.current) {
+      this.bgLayerRef.current.style.transform = "none";
+    }
+
+    const video = this.videoRef.current;
+    if (video && this._heroVideoSrc) {
+      video.pause();
+      video.src = this._heroVideoSrc;
+      video.preload = "auto";
+      video.addEventListener("loadedmetadata", () => {
+        this._videoReady = true;
+        video.classList.add("is-ready");
+        if (this.canvasRef.current) this.canvasRef.current.style.opacity = "0";
+        const kick = video.play();
+        if (kick && kick.then) kick.then(() => video.pause()).catch(() => {});
+        else video.pause();
+        this._signalHeroReady();
+      });
+      video.addEventListener("error", () => {
+        this._useFrames = true;
+        this._ensureFrame(0);
+      });
+      video.load();
+    }
+
+    this._initPanelVideo();
+
+    const apply = () => {
+      if (this.state.manifestoOpen) return;
+      this._targetP = this.clamp(this._v / this._max, 0, 1);
+      if (this._targetP <= this._heroScrubEnd + 0.02) {
+        this._scrubVideo(this._heroScrubProgress(this._targetP));
+      }
+      if (this._targetP >= this._panelStart - 0.02) {
+        this._scrubPanelVideo(this._panelScrubProgress(this._targetP));
+      }
+    };
+
+    this._onWheel = (e) => {
+      e.preventDefault();
+      if (this.state.manifestoOpen) return;
+      this._v = this.clamp(this._v + e.deltaY, 0, this._max);
+      apply();
+    };
+    this._onTouchStart = (e) => { this._touchY = e.touches[0].clientY; };
+    this._onTouchMove = (e) => {
+      if (this.state.manifestoOpen) { e.preventDefault(); return; }
+      if (this._touchY == null) return;
+      const y = e.touches[0].clientY;
+      this._v = this.clamp(this._v + (this._touchY - y) * this._touchGain, 0, this._max);
+      this._touchY = y;
+      e.preventDefault();
+      apply();
+    };
+    this._onTouchEnd = () => { this._touchY = null; };
+    this._onKeyDown = (e) => {
+      if (!this.state.manifestoOpen) return;
+      if (e.key === "Escape") this.closeManifesto(e);
+    };
+    this._onPointerMove = (e) => {
+      if (this._reduced || this.state.manifestoOpen) return;
+      this._pxT = this.clamp((e.clientX / this._viewW) * 2 - 1, -1, 1);
+      this._pyT = this.clamp((e.clientY / this._viewH) * 2 - 1, -1, 1);
+    };
+    this._onPointerLeave = () => {
+      this._pxT = 0;
+      this._pyT = 0;
+    };
+
+    el.addEventListener("wheel", this._onWheel, { passive: false });
+    el.addEventListener("touchstart", this._onTouchStart, { passive: false });
+    el.addEventListener("touchmove", this._onTouchMove, { passive: false });
+    el.addEventListener("touchend", this._onTouchEnd);
+    window.addEventListener("keydown", this._onKeyDown);
+    el.addEventListener("pointermove", this._onPointerMove);
+    el.addEventListener("pointerleave", this._onPointerLeave);
+    apply();
+
+    this._images = [];
+    this._frameCount = 300;
+    this._firstFrameIndex = 1;
+    this._padLen = 3;
+    this._keepWindow = 20;
+    if (this.canvasRef.current) this._syncHeroCanvas(this.canvasRef.current);
+    this._cacheView = () => {
+      this._viewW = this._el.clientWidth || window.innerWidth || 1;
+      this._viewH = this._el.clientHeight || window.innerHeight || 1;
+    };
+    this._onHeroResize = () => {
+      this._cacheView();
+      this._syncResponsive();
+      const canvas = this.canvasRef.current;
+      if (canvas && this._syncHeroCanvas(canvas)) this._currentFrame = -1;
+    };
+    window.addEventListener("resize", this._onHeroResize);
+    this._cacheView();
+    this._syncResponsive();
+    this._ensureFrame(0);
+    this._bindHotEls();
+
+    this._raf = null;
+    this._progressVal = 0;
+    this._currentFrame = -1;
+    this._lastRelease = 0;
+    const tick = () => {
+      const target = this._targetP;
+      const delta = target - this._progressVal;
+      const paraDx = this._pxT - this._px;
+      const paraDy = this._pyT - this._py;
+      const moving = Math.abs(delta) > 0.00008 || Math.abs(paraDx) > 0.001 || Math.abs(paraDy) > 0.001;
+      if (!moving) {
+        if (!this._settled) {
+          this._progressVal = target;
+          this._paintHot(this._progressVal, target);
+          this._settled = true;
+        }
+        this._raf = requestAnimationFrame(tick);
+        return;
+      }
+      this._settled = false;
+      this._progressVal += delta * this._frameLerp;
+      this._paintHot(this._progressVal, target);
+      this._raf = requestAnimationFrame(tick);
+    };
+    this._raf = requestAnimationFrame(tick);
+  }
+
+  componentWillUnmount() {
+    const el = this._el;
+    if (!el) return;
+    el.removeEventListener("wheel", this._onWheel);
+    el.removeEventListener("touchstart", this._onTouchStart);
+    el.removeEventListener("touchmove", this._onTouchMove);
+    el.removeEventListener("touchend", this._onTouchEnd);
+    el.removeEventListener("pointermove", this._onPointerMove);
+    el.removeEventListener("pointerleave", this._onPointerLeave);
+    window.removeEventListener("keydown", this._onKeyDown);
+    window.removeEventListener("resize", this._onHeroResize);
+    this._heroCtx = null;
+    if (this._raf) cancelAnimationFrame(this._raf);
+    if (this._flipRaf) cancelAnimationFrame(this._flipRaf);
+  }
+
+  clamp(v, a, b) { return Math.max(a, Math.min(v, b)); }
+
+  _panelScrubProgress(p) {
+    const start = this._panelStart;
+    const span = Math.max(0.001, 1 - start);
+    return this.clamp((p - start) / span, 0, 1);
+  }
+
+  _heroScrubProgress(p) {
+    return this.clamp(p / this._heroScrubEnd, 0, 1);
+  }
+
+  _initPanelVideo() {
+    const video = this.panelVideoRef.current;
+    if (!video || !this._panelSrc) {
+      requestAnimationFrame(() => {
+        if (this.panelVideoRef.current && !this._panelVideoReady) this._initPanelVideo();
+      });
+      return;
+    }
+    video.pause();
+    video.muted = true;
+    video.playsInline = true;
+    video.preload = "auto";
+    video.src = this._panelSrc;
+    video.addEventListener("loadedmetadata", () => {
+      this._panelVideoReady = true;
+      video.classList.add("is-ready");
+      const kick = video.play();
+      const afterKick = () => {
+        video.pause();
+        this._scrubPanelVideo(this._panelScrubProgress(this._progressVal || 0));
+      };
+      if (kick && kick.then) kick.then(afterKick).catch(afterKick);
+      else afterKick();
+    });
+    video.addEventListener("error", () => {
+      this._panelVideoReady = false;
+      video.classList.remove("is-ready");
+    });
+    video.load();
+  }
+
+  _scrubPanelVideo(p) {
+    this._scrubMedia(this.panelVideoRef.current, p, true);
+  }
+
+  _bindHotEls() {
+    const headline = this.headlineRef.current;
+    this._charEls = headline ? headline.querySelectorAll("span") : [];
+    this._drumEls = this.drumRigRef.current ? this.drumRigRef.current.querySelectorAll(".apex-drum-line") : [];
+  }
+
+  _frameSrc(index) {
+    return `assets/frames/frame_${(index + 1).toString().padStart(this._padLen, "0")}.jpg`;
+  }
+
+  _ensureFrame(index) {
+    if (index < 0 || index >= this._frameCount) return null;
+    let img = this._images[index];
+    if (img) return img;
+    img = new Image();
+    img.decoding = "async";
+    if (index === 0) img.fetchPriority = "high";
+    img.src = this._frameSrc(index);
+    if (index === 0) {
+      img.onload = () => {
+        if (this._paintHeroFrame(img)) this._signalHeroReady();
+      };
+    }
+    this._images[index] = img;
+    return img;
+  }
+
+  _releaseFarFrames(index) {
+    if (Math.abs(index - this._lastRelease) < 12) return;
+    this._lastRelease = index;
+    const keep = this._keepWindow;
+    for (let i = 0; i < this._frameCount; i++) {
+      if (this._images[i] && Math.abs(i - index) > keep) {
+        this._images[i].onload = null;
+        this._images[i].src = "";
+        this._images[i] = null;
+      }
+    }
+  }
+
+  _paintHot(p, scrubSource) {
+    const scrubP = scrubSource == null ? p : scrubSource;
+    const bgProgress = this._heroScrubProgress(scrubP);
+    if (scrubP <= this._heroScrubEnd + 0.02) this._scrubVideo(bgProgress);
+
+    const panelRaw = this.clamp((p - this._panelStart) / (this._panelEnd - this._panelStart), 0, 1);
+    const panelProgress = this.easeOut(panelRaw);
+    const panelScrub = this._panelScrubProgress(scrubP);
+    if (scrubP >= this._panelStart - 0.02) this._scrubPanelVideo(panelScrub);
+
+    if (this._useFrames && !this._videoReady) {
+      let frameIndex = Math.floor(bgProgress * (this._frameCount - 1));
+      if (frameIndex < 0) frameIndex = 0;
+      if (frameIndex >= this._frameCount) frameIndex = this._frameCount - 1;
+      this._ensureFrame(frameIndex);
+      this._ensureFrame(frameIndex + 1);
+      this._ensureFrame(frameIndex + 2);
+      const img = this._images[frameIndex];
+      if (img && img.complete && frameIndex !== this._currentFrame) {
+        if (this._paintHeroFrame(img)) this._currentFrame = frameIndex;
+      }
+      this._releaseFarFrames(frameIndex);
+    }
+
+    const panel = this.panelRef.current;
+    const panelMedia = this.panelMediaRef.current;
+    const rise = `translate3d(0, ${((1 - panelProgress) * 100).toFixed(2)}%, 0)`;
+    if (panel) {
+      panel.style.transform = rise;
+      panel.style.pointerEvents = panelProgress > 0.82 ? "auto" : "none";
+    }
+    if (panelMedia) panelMedia.style.transform = rise;
+
+    const headline = this.headlineRef.current;
+    if (headline) {
+      const hOp = Math.max(0, 1 - panelProgress * 1.35);
+      headline.style.opacity = hOp.toFixed(3);
+    }
+
+    const chars = this._charEls;
+    if (chars && chars.length) {
+      const N = chars.length;
+      const dur = this._headlineDur;
+      const span = this._headlineSpan;
+      for (let i = 0; i < N; i++) {
+        const start = (i / N) * span;
+        const cp = this.clamp((p - start) / dur, 0, 1);
+        chars[i].style.transform = `translateY(${(cp * 140).toFixed(1)}px) scale(${(1 + cp * 0.06).toFixed(3)}, ${(1 - cp * 0.45).toFixed(3)})`;
+        chars[i].style.opacity = (1 - cp).toFixed(3);
+      }
+    }
+
+    const endIn = this.clamp((p - this._endCopyStart) / this._endCopyIn, 0, 1);
+    const endHold = p < this._panelStart ? 1 : this.clamp(1 - panelProgress * 1.4, 0, 1);
+    const endEl = this.endCopyRef.current;
+    if (endEl) {
+      endEl.style.opacity = (endIn * endHold).toFixed(3);
+      endEl.style.transform = `translateY(${((1 - endIn) * 32).toFixed(1)}px)`;
+    }
+
+    const drumRaw = this.clamp((p - this._drumStart) / (this._drumEnd - this._drumStart), 0, 1);
+    const focusIndex = drumRaw * Math.max(0, this._drumTextCount - 1);
+    this._paintDrum(focusIndex);
+
+    const layer = this.bgLayerRef.current;
+    if (layer) {
+      if (this._reduced || this.state.manifestoOpen) {
+        this._pxT = 0;
+        this._pyT = 0;
+      }
+      this._px += (this._pxT - this._px) * 0.12;
+      this._py += (this._pyT - this._py) * 0.12;
+      if (this._reduced) {
+        layer.style.transform = "none";
+      } else {
+        const overflow = (this._paraScale - 1) / 2;
+        const maxX = this._viewW * overflow * this._paraCover;
+        const maxY = this._viewH * overflow * this._paraCover;
+        const tx = this.clamp(-this._px * maxX, -maxX, maxX);
+        const ty = this.clamp(-this._py * maxY, -maxY, maxY);
+        layer.style.transform = `translate3d(${tx.toFixed(2)}px, ${ty.toFixed(2)}px, 0) scale(${this._paraScale})`;
+      }
+    }
+  }
+
+  _paintDrum(focusIndex) {
+    this._drumFocusIndex = focusIndex;
+    const els = this._drumEls;
+    if (!els || !els.length) {
+      this._bindHotEls();
+      if (!this._drumEls || !this._drumEls.length) return;
+    }
+    const lines = this._drumEls;
+    const radius = this._drumRadius;
+    const lineH = this._drumLineH;
+    for (let i = 0; i < lines.length; i++) {
+      const el = lines[i];
+      const offset = i - focusIndex;
+      const dist = Math.abs(offset);
+      if (dist > 6) {
+        if (el.style.visibility !== "hidden") el.style.visibility = "hidden";
+        continue;
+      }
+      if (el.style.visibility !== "visible") el.style.visibility = "visible";
+      const theta = offset * (lineH / radius);
+      const ty = radius * Math.sin(theta);
+      const tz = radius * (1 - Math.cos(theta));
+      const rotX = -(theta * 180 / Math.PI);
+      let opacity = 1;
+      if (dist <= 1) opacity = 1 - dist * 0.04;
+      else if (dist <= 2) opacity = 0.92 - (dist - 1) * 0.12;
+      else opacity = Math.max(0.08, 0.8 - (dist - 2) * 0.22);
+      el.style.transform = `translate3d(0, ${ty.toFixed(1)}px, ${(-tz).toFixed(1)}px) rotateX(${rotX.toFixed(2)}deg)`;
+      el.style.opacity = opacity.toFixed(3);
+      const soft = dist > 1.05 && dist <= 2.35;
+      if (soft) el.classList.add("apex-drum-soft");
+      else el.classList.remove("apex-drum-soft");
+    }
+  }
+
+  _syncHeroCanvas(canvas) {
+    if (!canvas) return false;
+    const dpr = Math.min(window.devicePixelRatio || 1, this._heroDprCap);
+    const cssW = this._viewW || window.innerWidth || 1;
+    const cssH = this._viewH || window.innerHeight || 1;
+    const nextW = Math.max(1, Math.min(this._heroCapW, Math.round(cssW * dpr)));
+    const nextH = Math.max(1, Math.min(this._heroCapH, Math.round(cssH * dpr)));
+    if (canvas.width === nextW && canvas.height === nextH) return false;
+    canvas.width = nextW;
+    canvas.height = nextH;
+    this._heroCtx = null;
+    return true;
+  }
+
+  _heroDrawContext(canvas) {
+    if (this._heroCtx && this._heroCtx.canvas === canvas) return this._heroCtx;
+    const ctx = canvas.getContext("2d", { alpha: false, desynchronized: true });
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = this._heroSmooth || "medium";
+    this._heroCtx = ctx;
+    return ctx;
+  }
+
+  _paintHeroFrame(img) {
+    const canvas = this.canvasRef.current;
+    if (!canvas || !img || !img.complete) return false;
+    this._syncHeroCanvas(canvas);
+    const ctx = this._heroDrawContext(canvas);
+    if (!ctx) return false;
+    const cw = canvas.width;
+    const ch = canvas.height;
+    const iw = img.naturalWidth || img.width || 1;
+    const ih = img.naturalHeight || img.height || 1;
+    const scale = Math.max(cw / iw, ch / ih);
+    const dw = iw * scale;
+    const dh = ih * scale;
+    const dx = (cw - dw) / 2;
+    const dy = (ch - dh) / 2;
+    ctx.drawImage(img, dx, dy, dw, dh);
+    return true;
+  }
+
+  _scrubMedia(video, p, useFastSeek) {
+    if (!video || video.readyState < 1) return;
+    const duration = video.duration;
+    if (!duration || !isFinite(duration)) return;
+    const end = Math.max(0.001, duration - 0.001);
+    const t = this.clamp(p, 0, 1) * end;
+    if (Math.abs(video.currentTime - t) < 0.008) return;
+    if (useFastSeek && typeof video.fastSeek === "function") {
+      try { video.fastSeek(t); return; } catch (err) {}
+    }
+    try { video.currentTime = t; } catch (err) {}
+  }
+
+  _scrubVideo(p) {
+    this._scrubMedia(this.videoRef.current, p, true);
+  }
+
+  _buildDrumLines() {
+    const rows = [];
+    for (const raw of DRUM_LINES) {
+      if (raw === "") {
+        rows.push({ isGap: true, isLine: false });
+        continue;
+      }
+      rows.push({
+        isGap: false,
+        isLine: true,
+        parts: parseDrumLine(raw)
+      });
+    }
+    return rows;
+  }
+
+  _signalHeroReady() {
+    if (window.__apexHeroReady) return;
+    window.__apexHeroReady = true;
+    try { window.dispatchEvent(new Event("apex-hero-ready")); } catch (err) {}
+  }
+
+  easeOut(t) {
+    return 1 - Math.pow(1 - t, 4);
+  }
+
+  pageCount() {
+    return MANIFESTO_PAGES.length;
+  }
+
+  openManifesto(e) {
+    if (e) e.preventDefault();
+    this._closing = false;
+    this._lastFocus = document.activeElement;
+    this.setState({
+      manifestoOpen: true,
+      pageIndex: 0,
+      frontIndex: 0,
+      backIndex: 0,
+      flipTurns: 0,
+      isFlipping: false
+    });
+    window.requestAnimationFrame(() => {
+      this._bindHotEls();
+      this._paintHot(this._progressVal || 0);
+    });
+  }
+
+  closeManifesto(e) {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    if (!this.state.manifestoOpen || this._closing) return;
+    this._closing = true;
+    const overlay = this.overlayRef.current;
+    const stage = this.stageRef.current;
+    if (overlay) overlay.style.opacity = "0";
+    if (stage) {
+      stage.style.opacity = "0";
+      stage.style.transform = "translateY(8px) scale(0.98)";
+    }
+    const finish = () => {
+      this._closing = false;
+      this.setState({ manifestoOpen: false, isFlipping: false });
+      if (this._lastFocus && this._lastFocus.focus) this._lastFocus.focus();
+      window.requestAnimationFrame(() => {
+        this._bindHotEls();
+        this._paintHot(this._progressVal || 0);
+      });
+    };
+    if (this._reduced) {
+      finish();
+      return;
+    }
+    window.setTimeout(finish, 200);
+  }
+
+  swallowClick(e) {
+    e.stopPropagation();
+  }
+
+  flipLetter(e) {
+    if (e) e.stopPropagation();
+    if (!this.state.manifestoOpen || this.state.isFlipping || this._closing) return;
+    const n = this.pageCount();
+    const nextIndex = (this.state.pageIndex + 1) % n;
+    const frontFacing = this.state.flipTurns % 2 === 0;
+    const patch = { isFlipping: true };
+    if (frontFacing) patch.backIndex = nextIndex;
+    else patch.frontIndex = nextIndex;
+    this.setState(patch);
+    window.setTimeout(() => this.runFlip(nextIndex), 32);
+  }
+
+  runFlip(nextIndex) {
+    const startTurns = this.state.flipTurns;
+    const startDeg = startTurns * -180;
+    const rig = this.letterRigRef.current;
+    const duration = this._reduced ? 1 : 800;
+    const t0 = performance.now();
+
+    const frame = (now) => {
+      const t = this.clamp((now - t0) / duration, 0, 1);
+      const p = this._reduced ? 1 : this.easeOut(t);
+      const fold = Math.sin(p * Math.PI);
+      const deg = startDeg - 180 * p;
+      const scaleY = 1 - 0.045 * fold;
+      if (rig) rig.style.transform = `rotateX(${deg}deg) scaleY(${scaleY})`;
+      if (t < 1) {
+        this._flipRaf = requestAnimationFrame(frame);
+        return;
+      }
+      this._flipRaf = null;
+      if (rig) rig.style.transform = `rotateX(${startDeg - 180}deg)`;
+      this.setState({
+        pageIndex: nextIndex,
+        frontIndex: nextIndex,
+        backIndex: nextIndex,
+        flipTurns: startTurns + 1,
+        isFlipping: false
+      });
+    };
+    this._flipRaf = requestAnimationFrame(frame);
+  }
+
+  renderVals() {
+    const text = "REACH THE APEX";
+    const glyphs = text.split("");
+    const chars = glyphs.map((ch) => ({
+      ch,
+      transform: "none",
+      opacity: "1"
+    }));
+
+    return {
+      chars,
+      scrollerRef: this.scrollerRef,
+      canvasRef: this.canvasRef,
+      videoRef: this.videoRef,
+      bgLayerRef: this.bgLayerRef,
+      navRef: this.navRef,
+      headlineRef: this.headlineRef,
+      endCopyRef: this.endCopyRef,
+      panelRef: this.panelRef,
+      panelMediaRef: this.panelMediaRef,
+      panelVideoRef: this.panelVideoRef,
+      drumRigRef: this.drumRigRef,
+      overlayRef: this.overlayRef,
+      stageRef: this.stageRef,
+      letterRigRef: this.letterRigRef,
+      drumLines: this._buildDrumLines(),
+      manifestoOpen: this.state.manifestoOpen,
+      openManifesto: this.openManifesto,
+      closeManifesto: this.closeManifesto,
+      flipLetter: this.flipLetter,
+      swallowClick: this.swallowClick,
+      frontPage: MANIFESTO_PAGES[this.state.frontIndex],
+      backPage: MANIFESTO_PAGES[this.state.backIndex],
+      frontLabel: `${String(this.state.frontIndex + 1).padStart(2, "0")}  /  ${String(MANIFESTO_PAGES.length).padStart(2, "0")}`,
+      backLabel: `${String(this.state.backIndex + 1).padStart(2, "0")}  /  ${String(MANIFESTO_PAGES.length).padStart(2, "0")}`,
+      letterTransform: `rotateX(${this.state.flipTurns * -180}deg)`
+    };
+  }
+}
+</script>
+</body>
+</html>

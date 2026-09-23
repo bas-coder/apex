@@ -1,0 +1,78 @@
+{
+  "$meta": {
+    "name": "ApeX Design System",
+    "mode": "dark-first",
+    "fonts": { "display": "Michroma", "body": "Inter" }
+  },
+  "color": {
+    "primitive": {
+      "neutral-0": "#000000",
+      "neutral-200": "#171717",
+      "neutral-900": "#F3F4F6",
+      "neutral-1000": "#FFFFFF",
+      "slate-500": "#64748B",
+      "slate-600": "#94A3B8",
+      "slate-700": "#CBD5E1",
+      "green-500": "#2E7D38",
+      "lime-400": "#B4D634",
+      "lime-450": "#95D43F",
+      "lime-500": "#9EC116",
+      "gold-500": "#FFB800",
+      "ember-500": "#FF5100",
+      "profit-500": "#00FF66"
+    },
+    "alias": {
+      "surface-canvas": "neutral-0",
+      "text-primary": "neutral-900",
+      "text-secondary": "slate-700",
+      "text-on-action": "neutral-0",
+      "text-inverse": "neutral-200",
+      "accent-brand": "lime-400",
+      "accent-signal": "profit-500",
+      "accent-fire": "gold-500",
+      "accent-heat": "ember-500",
+      "action-interactive": "profit-500",
+      "action-primary": "lime-450"
+    },
+    "effect": {
+      "border-subtle": "rgba(255,255,255,0.10)",
+      "border-hairline": "rgba(255,255,255,0.18)",
+      "glow-signal": "rgba(0,255,102,0.55)"
+    }
+  },
+  "typography": {
+    "family": {
+      "display": "'Michroma', sans-serif",
+      "body": "'Inter', sans-serif"
+    },
+    "size": { "display": "6vw", "overline": "11px" },
+    "tracking": { "display": "-0.06em", "tight": "-0.02em" },
+    "weight": { "regular": 400, "medium": 500, "semibold": 600 }
+  },
+  "space": { "nav-y": "28px", "nav-x": "40px", "bottom": "40px" },
+  "radius": { "sm": "4px", "pill": "999px" },
+  "component": {
+    "light-pill-button": {
+      "surface": "linear-gradient(180deg,#FFFFFF 0%,#F3F4F6 100%)",
+      "text": "var(--text-inverse)",
+      "radius": "999px",
+      "padding": "12px 22px",
+      "font": "11px 'Inter'",
+      "border": "1px solid rgba(0,0,0,0.06)",
+      "shadow": {
+        "rest": "inset 0 -10px 12px -6px rgba(46,125,56,0.35), 0 1px 2px rgba(0,0,0,0.25)",
+        "hover": "inset 0 -12px 14px -6px rgba(46,125,56,0.50), 0 2px 6px rgba(0,0,0,0.30)"
+      },
+      "hover-transform": "translateY(-1px)",
+      "note": "Subtle GREEN (green-500) inner shadow rising from the bottom edge."
+    }
+  },
+  "motion": {
+    "easing-signature": "cubic-bezier(0.16,1,0.3,1)",
+    "transition-hover": "0.35s ease",
+    "entrance": {
+      "nav": "slide down from -20px, fade in, 1s @ 0.35s delay",
+      "headline": "slide up from +50px, fade in, 1.2s @ 0.6s delay"
+    }
+  }
+}

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+<template id="__bundler_thumbnail" data-bg-color="#000000">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#000000"/>
+    <text x="600" y="440" text-anchor="middle" font-family="sans-serif" font-weight="700" font-size="300" letter-spacing="-14">
+      <tspan fill="#F3F4F6">Ape</tspan><tspan fill="#FFB800">X</tspan>
+    </text>
+  </svg>
+</template>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Michroma&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ── ApeX Design System · tokens (backend rules the site abides by) ── */
+  :root{
+    /* Primitives */
+    --neutral-0:#000000; --neutral-200:#171717; --neutral-900:#F3F4F6; --neutral-1000:#FFFFFF;
+    --slate-500:#64748B; --slate-600:#94A3B8; --slate-700:#CBD5E1;
+    --green-500:#2E7D38;
+    --lime-400:#B4D634; --lime-450:#95D43F; --lime-500:#9EC116;
+    --gold-500:#FFB800;
+    --ember-500:#FF5100;
+    --profit-500:#00FF66;
+
+    /* Theme (aliased) */
+    --surface-canvas:var(--neutral-0);
+    --text-primary:var(--neutral-900);
+    --text-secondary:var(--slate-700);
+    --text-on-action:var(--neutral-0);
+    --text-inverse:var(--neutral-200);
+    --accent-brand:var(--lime-400);
+    --accent-signal:var(--profit-500);
+    --accent-fire:var(--gold-500);
+    --accent-heat:var(--ember-500);
+    --action-interactive:var(--profit-500);
+    --action-primary:var(--lime-450);
+    --border-subtle:rgba(255,255,255,0.10);
+    --border-hairline:rgba(255,255,255,0.18);
+    --glow-signal:rgba(0,255,102,0.55);
+
+    /* Responsive (numbers) */
+    --font-display:6vw;
+    --track-display:-0.06em;
+    --font-family-display:'Michroma',sans-serif;
+    --font-family-body:'Inter',sans-serif;
+    --font-overline:11px;
+    --track-tight:-0.02em;
+    --space-nav-y:28px; --space-nav-x:40px; --space-bottom:40px;
+    --radius-sm:4px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--surface-canvas)}
+  @keyframes apex-nav-down{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes apex-head-up{from{opacity:0;transform:translateY(50px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</helmet>
+<div ref="{{ scrollerRef }}" style="position:relative;width:100vw;height:100vh;overflow:hidden;background:var(--surface-canvas);font-family:var(--font-family-body);color:var(--text-primary);touch-action:none">
+
+  <div style="position:absolute;inset:0;overflow:hidden">
+
+    <nav style="position:absolute;top:0;left:0;right:0;z-index:3;display:flex;align-items:center;justify-content:space-between;padding:var(--space-nav-y) var(--space-nav-x);animation:apex-nav-down 1s cubic-bezier(0.16,1,0.3,1) 0.35s both">
+      <div style="font-size:22px;letter-spacing:-0.5px;display:flex;align-items:center;user-select:none;font-family:var(--font-family-display)">
+        <span style="color:var(--text-primary)">Ape</span><span style="color:var(--accent-fire)">X</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:38px">
+        <a href="#" style="font-size:var(--font-overline);color:var(--text-secondary);text-decoration:none;padding-bottom:4px;border-bottom:1px solid transparent;transition:color 0.35s ease,border-color 0.35s ease,text-shadow 0.35s ease" style-hover="color:var(--action-interactive);border-bottom:1px solid var(--action-interactive);text-shadow:0 0 14px var(--glow-signal)">The Manifesto</a>
+        <a href="#" style="font-size:var(--font-overline);color:var(--text-secondary);text-decoration:none;padding-bottom:4px;border-bottom:1px solid transparent;transition:color 0.35s ease,border-color 0.35s ease,text-shadow 0.35s ease" style-hover="color:var(--action-interactive);border-bottom:1px solid var(--action-interactive);text-shadow:0 0 14px var(--glow-signal)">GreenLight</a>
+        <a href="#" style="font-size:var(--font-overline);color:var(--text-secondary);text-decoration:none;padding-bottom:4px;border-bottom:1px solid transparent;transition:color 0.35s ease,border-color 0.35s ease,text-shadow 0.35s ease" style-hover="color:var(--action-interactive);border-bottom:1px solid var(--action-interactive);text-shadow:0 0 14px var(--glow-signal)">Base</a>
+        <a href="#" style="font-size:var(--font-overline);color:var(--text-inverse);text-decoration:none;padding:12px 22px;border-radius:999px;background:linear-gradient(180deg,var(--neutral-1000) 0%,var(--neutral-900) 100%);border:1px solid rgba(0,0,0,0.06);box-shadow:inset 0 -10px 12px -6px rgba(46,125,56,0.35),0 1px 2px rgba(0,0,0,0.25);transition:box-shadow 0.35s ease,transform 0.35s ease" style-hover="box-shadow:inset 0 -12px 14px -6px rgba(46,125,56,0.5),0 2px 6px rgba(0,0,0,0.3);transform:translateY(-1px)">Join the Pride</a>
+      </div>
+    </nav>
+
+    <div style="position:absolute;left:0;right:0;bottom:var(--space-bottom);z-index:2;padding:0 28px;animation:apex-head-up 1.2s cubic-bezier(0.16,1,0.3,1) 0.6s both">
+      <div style="position:relative;width:100%;text-align:center;font-size:var(--font-display);line-height:0.9;letter-spacing:var(--track-display);white-space:nowrap;font-family:var(--font-family-display);color:var(--text-primary)">
+        <sc-for list="{{ chars }}" as="c" hint-placeholder-count="14">
+          <span style="display:inline-block;white-space:pre;transform-origin:center top;transform:{{ c.transform }};opacity:{{ c.opacity }};will-change:transform, opacity">{{ c.ch }}</span>
+        </sc-for>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { progress: 0 };
+
+  constructor(props) {
+    super(props);
+    this.scrollerRef = React.createRef();
+  }
+
+  componentDidMount() {
+    const el = this.scrollerRef.current;
+    if (!el) return;
+    this._el = el;
+    this._v = 0;
+    this._max = 900;          // virtual scroll distance for the full wipe
+    this._touchY = null;
+
+    const apply = () => {
+      const p = this.clamp(this._v / this._max, 0, 1);
+      if (p !== this.state.progress) this.setState({ progress: p });
+    };
+
+    this._onWheel = (e) => {
+      e.preventDefault();
+      this._v = this.clamp(this._v + e.deltaY, 0, this._max);
+      apply();
+    };
+    this._onTouchStart = (e) => { this._touchY = e.touches[0].clientY; };
+    this._onTouchMove = (e) => {
+      if (this._touchY == null) return;
+      const y = e.touches[0].clientY;
+      this._v = this.clamp(this._v + (this._touchY - y) * 1.6, 0, this._max);
+      this._touchY = y;
+      e.preventDefault();
+      apply();
+    };
+    this._onTouchEnd = () => { this._touchY = null; };
+
+    el.addEventListener('wheel', this._onWheel, { passive: false });
+    el.addEventListener('touchstart', this._onTouchStart, { passive: false });
+    el.addEventListener('touchmove', this._onTouchMove, { passive: false });
+    el.addEventListener('touchend', this._onTouchEnd);
+    apply();
+  }
+
+  componentWillUnmount() {
+    const el = this._el;
+    if (!el) return;
+    el.removeEventListener('wheel', this._onWheel);
+    el.removeEventListener('touchstart', this._onTouchStart);
+    el.removeEventListener('touchmove', this._onTouchMove);
+    el.removeEventListener('touchend', this._onTouchEnd);
+  }
+
+  clamp(v, a, b) { return Math.max(a, Math.min(v, b)); }
+
+  renderVals() {
+    const text = 'REACH THE APEX';
+    const glyphs = text.split('');
+    const N = glyphs.length;
+    const p = this.state.progress;
+    const dur = 0.28;      // how much scroll each letter takes
+    const span = 0.72;     // portion of scroll across which the wave travels
+
+    const chars = glyphs.map((ch, i) => {
+      const start = (i / N) * span;
+      const cp = this.clamp((p - start) / dur, 0, 1);
+      const ty = (cp * 140).toFixed(1);          // fall downward
+      const sx = (1 + cp * 0.06).toFixed(3);      // slight horizontal spread
+      const sy = (1 - cp * 0.45).toFixed(3);      // vertical squish
+      return {
+        ch,
+        transform: `translateY(${ty}px) scale(${sx}, ${sy})`,
+        opacity: (1 - cp).toFixed(3)
+      };
+    });
+
+    return { chars, scrollerRef: this.scrollerRef };
+  }
+}
+</script>
+</body>
+</html>

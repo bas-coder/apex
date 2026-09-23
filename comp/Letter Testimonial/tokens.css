@@ -1,0 +1,875 @@
+/**
+ * Project design tokens extracted from the Framer canvas.
+ * Import this file once at the root of your app so the
+ * --token-<uuid> CSS variables referenced by exported components resolve.
+ */
+/* Fallback @imports for families not covered by @font-face above. */
+/* These rely on Google Fonts publishing the family under the exact name; */
+/* will silently 404 for custom or non-Google fonts. */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bricolage%20Grotesque:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --token-21df2d5a-27b9-417c-be45-f06c7aad9955: rgba(247, 244, 238, 0);
+  --token-38133d93-373c-419d-bf20-b309343e3614: rgba(239, 239, 239, 0.7);
+  --token-401b6902-9363-4b4c-94bb-2b9453b8c46a: rgb(214, 214, 214);
+  --token-5e543dde-bb24-4d34-955f-aa29b8fb60bd: rgba(200, 121, 58, 0.05);
+  --token-35444dae-5328-4ae6-9b45-8aaee8900150: rgb(179, 117, 70);
+  --token-ced3d941-b371-43ab-950e-08b5cdbad35d: rgba(200, 121, 58, 0.1);
+  --token-da478c3a-4841-409d-8228-1bd59e57d322: rgba(28, 20, 15, 0.45);
+  --token-44874df8-2d34-4be2-9f84-8fe847edd7c0: rgba(6, 5, 4, 0.05);
+  --token-dca0319a-9ca1-4f13-8151-9198ef77f36a: rgb(30, 192, 90);
+  --token-508e5cbc-2595-4650-8120-8aa254365739: rgba(6, 5, 4, 0.8);
+  --token-3b3bb164-f10a-40ee-aecd-456c42b0c67a: rgb(247, 244, 238);
+  --token-b1d6b2c9-c4ae-438d-9c95-80c71f900488: rgb(251, 249, 246);
+  --token-b960ea04-8e18-497c-a052-b9c1b9245a89: rgb(252, 252, 252);
+  --token-1a732567-40e9-4b73-8c86-17cc5eaeeacc: rgb(239, 234, 225);
+  --token-064ccf64-5cbd-4761-9860-7b4337769459: rgb(11, 9, 7);
+  --token-db227bca-730d-40f6-853b-895c7bebaf3d: rgb(58, 52, 43);
+  --token-74c07fa3-55c2-40ab-9dac-754e3a380df0: rgb(137, 130, 121);
+  --token-44553655-36de-4b0a-b609-996e12dbe63b: rgb(251, 249, 246);
+  --token-437c26fb-8ca4-445c-89be-bd35f916079e: rgba(28, 20, 15, 0.12);
+  --token-f5ea0495-6dc6-43be-af9c-d67e4b47a474: rgba(28, 20, 15, 0.06);
+  --token-a79202e4-f28c-4d44-83d0-e120e06c7c45: rgba(28, 20, 15, 0.18);
+  --token-57ad04a0-fd30-44e9-9a7e-cb4aa8b7eadf: rgb(254, 160, 2);
+  --token-5c0714fc-5b9e-4bf8-b1c3-4c2545f10d37: rgb(191, 78, 11);
+  --token-aaa2bc55-26ae-4aa2-a643-6f5e2716f83d: rgb(254, 160, 2);
+  --token-3dc99dfe-bae3-4d01-8fd1-a420ef5a1f35: rgb(252, 252, 252);
+  --token-da674097-5f80-48af-9c53-b5c7899465b9: rgb(252, 252, 252);
+  --token-7ea44122-8aba-4464-889e-45ec9ba9086f: rgb(6, 5, 4);
+  --token-81ade45c-cdb5-4f0b-95ba-b1d6252c827a: rgb(63, 163, 107);
+  --token-1fcf5775-7512-4f52-87fc-bc28fc2be292: rgb(224, 160, 48);
+  --token-8f7954f7-bb38-4ad4-a084-59a1f39237d3: rgb(214, 90, 74);
+  --token-5112011a-e0ce-4a23-984b-bdd5d2dcc03b: rgb(91, 141, 239);
+  --token-4ef251f9-3209-4714-8df2-794ef6576a47: rgb(191, 78, 11);
+  --token-ebc1f26f-2aab-4a2d-a8fd-50e2c0bdba42: rgb(6, 5, 4);
+  --token-3b8f89bb-3e70-496d-ba4e-f2721995f0ed: rgb(18, 18, 17);
+  --token-aa1ca9a8-bdb3-46b8-8ab2-34fdecc0ad3c: rgb(68, 68, 67);
+  --token-139512c5-c81f-4060-ba94-a6570f3b98f2: rgb(106, 105, 104);
+  --token-1a307891-96c5-4f94-815f-e9504b7b8282: rgb(252, 252, 252);
+  --token-8bd4818c-5158-4b66-ac4f-29a06e1765ca: rgb(191, 78, 11);
+  --token-745cd8af-4b10-4650-bf20-5a3c7412a4e7: rgb(6, 5, 4);
+  --token-7ffb80f1-ed14-488a-8dbf-8f158f7c4da5: rgb(30, 26, 21);
+  --token-f608c1a6-180d-4a97-b71d-1788a2b3bb94: rgb(107, 99, 87);
+  --token-f93817ba-f159-43a7-a6cf-8984be46815b: rgb(251, 249, 246);
+  --token-649fcc59-fad2-465d-9c48-426eac906400: rgb(191, 78, 11);
+  --token-0c6c8aa2-8b4f-4023-ac82-00b8353fb8f5: rgba(0, 0, 0, 0.08);
+  --token-2f7edb4a-b688-4115-b124-0b4563a25fbe: rgba(0, 0, 0, 0.15);
+  --token-70c3439d-db75-4a01-ab25-6c1ce66dadee: rgba(0, 0, 0, 0.25);
+  --token-87a777ed-9b2f-4b1b-b332-bbbe796abaf9: rgb(214, 211, 206);
+  --token-b248ee33-0c6e-4e42-b5d5-022aa26e12e5: rgb(23, 23, 23);
+  --token-4922ebe1-95d2-4106-be64-4e590100b975: rgb(116, 92, 179);
+  --token-a7cc9c10-3d19-4f77-8fcf-439ff03d55eb: rgba(116, 92, 179, 0.06);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --token-21df2d5a-27b9-417c-be45-f06c7aad9955: rgba(6, 5, 4, 0);
+    --token-38133d93-373c-419d-bf20-b309343e3614: rgba(252, 252, 252, 0.1);
+    --token-401b6902-9363-4b4c-94bb-2b9453b8c46a: rgba(252, 252, 252, 0.15);
+    --token-5e543dde-bb24-4d34-955f-aa29b8fb60bd: rgba(200, 121, 58, 0.05);
+    --token-35444dae-5328-4ae6-9b45-8aaee8900150: rgb(128, 81, 42);
+    --token-ced3d941-b371-43ab-950e-08b5cdbad35d: rgba(200, 121, 58, 0.1);
+    --token-da478c3a-4841-409d-8228-1bd59e57d322: rgba(6, 5, 4, 0.72);
+    --token-44874df8-2d34-4be2-9f84-8fe847edd7c0: rgba(255, 255, 255, 0.05);
+    --token-dca0319a-9ca1-4f13-8151-9198ef77f36a: rgb(37, 211, 102);
+    --token-508e5cbc-2595-4650-8120-8aa254365739: rgba(252, 252, 252, 0.8);
+    --token-3b3bb164-f10a-40ee-aecd-456c42b0c67a: rgb(20, 18, 18);
+    --token-b1d6b2c9-c4ae-438d-9c95-80c71f900488: rgb(29, 26, 24);
+    --token-b960ea04-8e18-497c-a052-b9c1b9245a89: rgb(37, 33, 29);
+    --token-1a732567-40e9-4b73-8c86-17cc5eaeeacc: rgb(50, 44, 36);
+    --token-064ccf64-5cbd-4761-9860-7b4337769459: rgb(251, 249, 246);
+    --token-db227bca-730d-40f6-853b-895c7bebaf3d: rgb(173, 165, 152);
+    --token-74c07fa3-55c2-40ab-9dac-754e3a380df0: rgb(107, 99, 87);
+    --token-44553655-36de-4b0a-b609-996e12dbe63b: rgb(11, 9, 7);
+    --token-437c26fb-8ca4-445c-89be-bd35f916079e: rgba(239, 234, 225, 0.12);
+    --token-f5ea0495-6dc6-43be-af9c-d67e4b47a474: rgba(239, 234, 225, 0.06);
+    --token-a79202e4-f28c-4d44-83d0-e120e06c7c45: rgba(239, 234, 225, 0.2);
+    --token-57ad04a0-fd30-44e9-9a7e-cb4aa8b7eadf: rgb(240, 169, 78);
+    --token-5c0714fc-5b9e-4bf8-b1c3-4c2545f10d37: rgb(242, 129, 62);
+    --token-aaa2bc55-26ae-4aa2-a643-6f5e2716f83d: rgb(240, 169, 78);
+    --token-3dc99dfe-bae3-4d01-8fd1-a420ef5a1f35: rgb(11, 9, 7);
+    --token-da674097-5f80-48af-9c53-b5c7899465b9: rgb(252, 252, 252);
+    --token-7ea44122-8aba-4464-889e-45ec9ba9086f: rgb(6, 5, 4);
+    --token-81ade45c-cdb5-4f0b-95ba-b1d6252c827a: rgb(63, 163, 107);
+    --token-1fcf5775-7512-4f52-87fc-bc28fc2be292: rgb(224, 160, 48);
+    --token-8f7954f7-bb38-4ad4-a084-59a1f39237d3: rgb(255, 34, 68);
+    --token-5112011a-e0ce-4a23-984b-bdd5d2dcc03b: rgb(91, 141, 239);
+    --token-4ef251f9-3209-4714-8df2-794ef6576a47: rgb(242, 129, 62);
+    --token-ebc1f26f-2aab-4a2d-a8fd-50e2c0bdba42: rgb(252, 252, 252);
+    --token-3b8f89bb-3e70-496d-ba4e-f2721995f0ed: rgb(215, 211, 203);
+    --token-aa1ca9a8-bdb3-46b8-8ab2-34fdecc0ad3c: rgb(173, 165, 152);
+    --token-139512c5-c81f-4060-ba94-a6570f3b98f2: rgb(138, 129, 117);
+    --token-1a307891-96c5-4f94-815f-e9504b7b8282: rgb(6, 5, 4);
+    --token-8bd4818c-5158-4b66-ac4f-29a06e1765ca: rgb(203, 128, 2);
+    --token-745cd8af-4b10-4650-bf20-5a3c7412a4e7: rgb(251, 249, 246);
+    --token-7ffb80f1-ed14-488a-8dbf-8f158f7c4da5: rgb(173, 165, 152);
+    --token-f608c1a6-180d-4a97-b71d-1788a2b3bb94: rgb(138, 129, 117);
+    --token-f93817ba-f159-43a7-a6cf-8984be46815b: rgb(20, 18, 18);
+    --token-649fcc59-fad2-465d-9c48-426eac906400: rgb(203, 128, 2);
+    --token-0c6c8aa2-8b4f-4023-ac82-00b8353fb8f5: rgba(255, 255, 255, 0.08);
+    --token-2f7edb4a-b688-4115-b124-0b4563a25fbe: rgba(255, 255, 255, 0.15);
+    --token-70c3439d-db75-4a01-ab25-6c1ce66dadee: rgba(255, 255, 255, 0.25);
+    --token-87a777ed-9b2f-4b1b-b332-bbbe796abaf9: rgb(29, 26, 24);
+    --token-b248ee33-0c6e-4e42-b5d5-022aa26e12e5: rgb(232, 232, 232);
+    --token-4922ebe1-95d2-4106-be64-4e590100b975: rgb(166, 132, 255);
+    --token-a7cc9c10-3d19-4f77-8fcf-439ff03d55eb: rgba(166, 132, 255, 0.08);
+  }
+}
+
+.text-style-KGlEHSEvR {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  line-height: 16px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-ARTazWWSW {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  line-height: 16px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-Dh__YGURx {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  line-height: 16px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-bm_6a2W2r {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  line-height: 16px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-FiRw5NXRD {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  line-height: 16px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-idr6aWLdQ {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  line-height: 16px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-NTXfrGBHW {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  line-height: 16px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-QYPlnW5no {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  line-height: 16px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-xFem2mhrM {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  line-height: 16px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-yFZBu_lWV {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  line-height: 16px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-ZRaT9MyNJ {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  line-height: 16px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-nSUDBn9kx {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  line-height: 16px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-Ejabs668t {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  line-height: 16px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-Jk7yx0CWI {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  line-height: 16px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-gvFgfiBzL {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  line-height: 16px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-Cbmoexi8a {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  line-height: 16px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-zxX2yG7rA {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  line-height: 16px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-ISpX6aAAs {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  line-height: 16px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-Ss5GkSDmN {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-WvI4QSfnC {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-nSpvx2pDB {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-ZFxnVgH1V {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-Qk24HHUSM {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-ORLI0zgjW {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-JRCKjUPeG {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-ZslckrFjB {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-FF0QoqIcB {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-jBl5B1ip8 {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-DwXltmVv7 {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-cEWryUFkG {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-qbW3m4S0y {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-QjGNtiJxj {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-Y5k0GVafy {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-rPQjEf5TI {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-bXelulPAN {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-RYaBMbl1e {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-dt7t3FX9n {
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  line-height: 28px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-BipSDiMCc {
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  line-height: 28px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-jSMrF5MnX {
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  line-height: 28px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-EwPGrKELk {
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  line-height: 28px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-iyodutECC {
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  line-height: 28px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-BM4DhpndY {
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  line-height: 28px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-WbqbLI7ec {
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  line-height: 28px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-lf3OB8Brz {
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  line-height: 28px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-vhslELdjE {
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  line-height: 28px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-g2V23Q8vw {
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  line-height: 28px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-z5dbse3XF {
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  line-height: 28px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-IGdsEy5Lv {
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  line-height: 28px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-Mk7ylDZxp {
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  line-height: 28px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-f_NZZjFpL {
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  line-height: 28px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-ozUhtEiqu {
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  line-height: 28px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-cQuhAGhi8 {
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  line-height: 28px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-zlaobh_j6 {
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  line-height: 28px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-eKJfnlCFL {
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  line-height: 28px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-jx34uDFRy {
+  font-family: 'Inter', sans-serif;
+  font-size: 24px;
+  line-height: 32px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-V1B15gTC5 {
+  font-family: 'Inter', sans-serif;
+  font-size: 24px;
+  line-height: 32px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-zSQVZAm9u {
+  font-family: 'Inter', sans-serif;
+  font-size: 24px;
+  line-height: 32px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-lQyTHaDrB {
+  font-family: 'Inter', sans-serif;
+  font-size: 24px;
+  line-height: 32px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-GsV0RVY9h {
+  font-family: 'Inter', sans-serif;
+  font-size: 24px;
+  line-height: 32px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-pRC6Brz8h {
+  font-family: 'Inter', sans-serif;
+  font-size: 24px;
+  line-height: 32px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-yplwCf2SS {
+  font-family: 'Inter', sans-serif;
+  font-size: 24px;
+  line-height: 32px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-DT2pSyT53 {
+  font-family: 'Inter', sans-serif;
+  font-size: 24px;
+  line-height: 32px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-Bm7pzTTJu {
+  font-family: 'Inter', sans-serif;
+  font-size: 24px;
+  line-height: 32px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-pzlLhnimR {
+  font-family: 'Inter', sans-serif;
+  font-size: 30px;
+  line-height: 36px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-RmasdxKHx {
+  font-family: 'Inter', sans-serif;
+  font-size: 30px;
+  line-height: 36px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-rTkA89WwJ {
+  font-family: 'Inter', sans-serif;
+  font-size: 30px;
+  line-height: 36px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-OVyJZVBjr {
+  font-family: 'Inter', sans-serif;
+  font-size: 30px;
+  line-height: 36px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-kfooqOvhJ {
+  font-family: 'Inter', sans-serif;
+  font-size: 30px;
+  line-height: 36px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-yOJH_6qWB {
+  font-family: 'Inter', sans-serif;
+  font-size: 30px;
+  line-height: 36px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-CKBiSlSTu {
+  font-family: 'Inter', sans-serif;
+  font-size: 30px;
+  line-height: 36px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-hqaOrBNrB {
+  font-family: 'Inter', sans-serif;
+  font-size: 30px;
+  line-height: 36px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-QHpLCn4NM {
+  font-family: 'Inter', sans-serif;
+  font-size: 30px;
+  line-height: 36px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-gw5cR6xTk {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 2.25rem;
+  line-height: 40px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-bmWJp_7Gg {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 2.25rem;
+  line-height: 40px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-rph5CVxyw {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 2.25rem;
+  line-height: 40px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-AdCpw3QkI {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 2.25rem;
+  line-height: 40px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-lXl_g3nDg {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 2.25rem;
+  line-height: 40px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-K8wP7ZUM6 {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 2.25rem;
+  line-height: 40px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-qHO9H78Bf {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 2.25rem;
+  line-height: 40px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-YRP6Oe2s5 {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 2.25rem;
+  line-height: 40px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-NP_kLFH2H {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 2.25rem;
+  line-height: 40px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-TJPXcWEEe {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 3rem;
+  line-height: 1.2em;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-CjIT21qTn {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 3rem;
+  line-height: 1.2em;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-NE6M_0QWz {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 3rem;
+  line-height: 1.2em;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-KqNTmXqhH {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 3rem;
+  line-height: 1.2em;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-rfE0QU3Cy {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 3rem;
+  line-height: 1.2em;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-CqLqMYHzK {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 3rem;
+  line-height: 1.2em;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-Ypk9XtWWE {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 3rem;
+  line-height: 1.2em;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-D8r64uzC_ {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 3rem;
+  line-height: 1.2em;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-bWcmsauaj {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 3rem;
+  line-height: 1.2em;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-VQFVg0H9v {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 3.75rem;
+  line-height: 60px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-cSLNSuHSj {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 3.75rem;
+  line-height: 60px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-ItB7stEV3 {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 3.75rem;
+  line-height: 60px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-Wp2WiUauM {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 3.75rem;
+  line-height: 60px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-tfAdhkYw9 {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 3.75rem;
+  line-height: 60px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-xqL0NPTgn {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 3.75rem;
+  line-height: 60px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-tUdH4t0Lg {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 3.75rem;
+  line-height: 60px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-isxx6Tmvc {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 3.75rem;
+  line-height: 60px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-zrbEgOR1P {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 3.75rem;
+  line-height: 60px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-Uq8NOCFBM {
+  font-family: 'Inter', sans-serif;
+  font-size: 4.5rem;
+  line-height: 72px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-NsuB_hrlM {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 4.5rem;
+  line-height: 72px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-oumSj1xvD {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 4.5rem;
+  line-height: 72px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-t_TSIZv5V {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 4.5rem;
+  line-height: 72px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-nqS9O5eRk {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 4.5rem;
+  line-height: 72px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-W4toKwpyk {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 4.5rem;
+  line-height: 72px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-rqHyJ75Ie {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 4.5rem;
+  line-height: 72px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-injCyC1R1 {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 4.5rem;
+  line-height: 72px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-jM0Jdq1Dz {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 4.5rem;
+  line-height: 72px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-UrO5h8otN {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 6rem;
+  line-height: 96px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-zqq54thve {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 6rem;
+  line-height: 96px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-O3lC9esTH {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 6rem;
+  line-height: 96px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-cnReqCgKQ {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 6rem;
+  line-height: 96px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-cDiM3qBe1 {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 6rem;
+  line-height: 96px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-lSC7hcYUY {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 6rem;
+  line-height: 96px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-HKccOZtcv {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 6rem;
+  line-height: 96px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-qren2kCAv {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 6rem;
+  line-height: 96px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-Tgrh4fp_X {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 6rem;
+  line-height: 96px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-S3VMpKxLw {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 8rem;
+  line-height: 128px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-d12ZGKn_V {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 8rem;
+  line-height: 128px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-eED_u8ERL {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 8rem;
+  line-height: 128px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-nkwHKunWv {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 8rem;
+  line-height: 128px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-KlAA7RcTt {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 8rem;
+  line-height: 128px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-xN4wK4TNv {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 8rem;
+  line-height: 128px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-S6eSJ6F3l {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 8rem;
+  line-height: 128px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-TFOyxzDwE {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 8rem;
+  line-height: 128px;
+  color: hsl(0, 0%, 0%);
+}
+.text-style-AoKGcCCpm {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 8rem;
+  line-height: 128px;
+  color: hsl(0, 0%, 0%);
+}
